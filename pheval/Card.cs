@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace pheval
+﻿namespace pheval
 {
     public class Card
     {
-        static Dictionary<char, byte> rankMap = new Dictionary<char, byte>()
+        public static Dictionary<char, byte> rankMap = new Dictionary<char, byte>()
         {
             { '2', 0}, { '3', 1}, { '4', 2}, { '5', 3},
             { '6', 4}, { '7', 5}, { '8', 6}, { '9', 7},
-            { 'T', 8}, { 'J', 9}, { 'Q', 10}, { 'K', 11}, { 'A', 12},
-            { 't', 8}, { 'j', 9}, { 'q', 10}, { 'k', 11}, { 'a', 12},
+            { 'T', 8}, { 'J', 9}, { 'Q', 10}, { 'K', 11}, { 'A', 12}
         };
-        static Dictionary<char, byte> suitMap = new Dictionary<char, byte>()
+        public static Dictionary<char, byte> suitMap = new Dictionary<char, byte>()
         {
-            { 'C', 0}, { 'D', 1}, { 'H', 2}, { 'S', 3},
-            { 'c', 0}, { 'd', 1}, { 'h', 2}, { 's', 3},
+            { 'c', 0}, { 'd', 1}, { 'h', 2}, { 's', 3}
         };
         static char[] rankReverseArray = {
           '2', '3', '4', '5',
@@ -29,7 +23,7 @@ namespace pheval
 
         public Card(string name)
         {
-            id = (byte)(rankMap[name[0]] * 4 + suitMap[name[1]]);
+            id = (byte)(rankMap[char.ToUpper(name[0])] * 4 + suitMap[char.ToLower(name[1])]);
         }
 
         public Card(byte id_)
