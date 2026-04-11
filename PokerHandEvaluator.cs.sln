@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pheval.Tests", "pheval.Tests\pheval.Tests.csproj", "{E4B44BE4-21EB-4725-AB2E-182E6277B70C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerHandEvaluator.Tests", "tests\PokerHandEvaluator.Tests.csproj", "{E4B44BE4-21EB-4725-AB2E-182E6277B70C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pheval", "pheval\pheval.csproj", "{A56B2247-B04E-4B73-A563-143C0586CDD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerHandEvaluator", "src\PokerHandEvaluator.csproj", "{A56B2247-B04E-4B73-A563-143C0586CDD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pheval.Benchmarks", "pheval.Benchmarks\pheval.Benchmarks.csproj", "{949B5CD4-425A-402D-9248-4A88E86262A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerHandEvaluator.Benchmarks", "benchmarks\PokerHandEvaluator.Benchmarks.csproj", "{949B5CD4-425A-402D-9248-4A88E86262A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

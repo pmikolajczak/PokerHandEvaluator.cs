@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>PokerHandEvaluator</AssemblyName>
+    <RootNamespace>PokerHandEvaluator</RootNamespace>
+    <PackageId>PokerHandEvaluator</PackageId>
+    <Description>High-performance poker hand evaluator for .NET.</Description>
+  </PropertyGroup>
+
+</Project>

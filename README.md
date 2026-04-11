@@ -1,41 +1,64 @@
-# PokerHandEvaluator.cs 
+# PokerHandEvaluator
 
-A port of [HenryRLee/PokerHandEvaluator](https://github.com/HenryRLee/PokerHandEvaluator) from c++ to c#.  
-This is a net6 version.
+A .NET 10 poker hand evaluator based on [HenryRLee/PokerHandEvaluator](https://github.com/HenryRLee/PokerHandEvaluator), updated for a modern C# codebase with strong correctness coverage and zero-allocation hot paths.
 
+## API Direction
 
-### Usage
+The intended evaluator surface is:
 
-Have a look in the [pheval.Tests](pheval.Tests) folder.  
+- fixed-arity id APIs:
+  - `Eval.Eval5(byte, byte, byte, byte, byte)`
+  - `Eval.Eval6(byte, byte, byte, byte, byte, byte)`
+  - `Eval.Eval7(byte, byte, byte, byte, byte, byte, byte)`
+- span-based id APIs:
+  - `Eval.Eval5(ReadOnlySpan<byte>)`
+  - `Eval.Eval6(ReadOnlySpan<byte>)`
+  - `Eval.Eval7(ReadOnlySpan<byte>)`
 
+Card ids are in the range `0..51`, where:
 
-### Testing
+- the low 2 bits are suit
+- the remaining bits are rank
 
-In monodevelop or visual studio, select the pheval.Tests project and choose Run -> 'Run Unit Tests'.  The tests depend on the presence of libpheval.so (or .dll).  This shared object was created as follows:
+`Card` is available as a lightweight value type and parser helper, but the evaluator is designed around card ids rather than string parsing.
 
-```console
-$ git clone https://github.com/HenryRLee/PokerHandEvaluator
-$ cd PokerHandEvaluator/cpp
-$ # edit CMakeLists.txt changing STATIC to SHARED on line 16
-$ mkdir build && cd build
-$ cmake -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF ..
-$ make
-$ # now copy libpheval.so (or .dll) into the pheval.Tests directory of this project
+## Performance
+
+Current hot-path benchmark results on this machine:
+
+```text
+Eval5_FixedIds   8.819 ns   0 B
+Eval5_IdSpan    12.736 ns   0 B
+Eval6_FixedIds  10.701 ns   0 B
+Eval7_FixedIds  11.737 ns   0 B
 ```
 
-If you're on windows, you'll have to add libpheval.dll to the pheval.Tests project and select 'Copy To Output Directory' (in monodevelop right-click the file -> 'Quick Properties')  
+Convenience wrappers still cost more:
 
-### Benchmark
-``` ini
+```text
+Eval5_Cards    18.274 ns   32 B
+```
 
-BenchmarkDotNet=v0.13.2, OS=Windows 10 (10.0.19044.2006/21H2/November2021Update)
-Intel Core i9-10850K CPU 3.60GHz, 1 CPU, 20 logical and 10 physical cores
-.NET SDK=6.0.401
-  [Host]     : .NET 6.0.9 (6.0.922.41905), X64 RyuJIT AVX2
-  DefaultJob : .NET 6.0.9 (6.0.922.41905), X64 RyuJIT AVX2
+## Testing
 
-|          Method |     Mean |   Error |  StdDev |
-|---------------- |---------:|--------:|--------:|
-| GetHandStrength | 221.2 ns | 4.01 ns | 3.75 ns |
+Install the .NET 10 SDK and run:
 
+```console
+dotnet test
+```
+
+The test suite includes:
+
+- upstream CSV corpus validation for 5, 6, and 7-card evaluation
+- exhaustive 5-card category distribution checks
+- order-invariance and rank-boundary tests
+- invalid-input contract tests
+- allocation baseline tests
+
+## Benchmarks
+
+Run:
+
+```console
+dotnet run -c Release --project benchmarks/PokerHandEvaluator.Benchmarks.csproj -- --filter "*EvaluatorBenchmarks*"
 ```
